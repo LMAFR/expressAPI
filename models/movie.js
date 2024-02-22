@@ -55,13 +55,10 @@ export class MovieModel {
     if (movieIndex === -1) {
       return { message: 'Movie not found' }
     } else {
-      const updateMovie = {
+      movies[movieIndex] = {
         ...movies[movieIndex],
         ...input
       }
-
-      movies[movieIndex] = updateMovie
-
       return movies[movieIndex]
     }
   }

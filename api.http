@@ -38,12 +38,10 @@ PATCH http://localhost:1234/movies/dcdd0fad-a94c-4810-8acc-5f108d3b18c3
 Content-Type: application/json
 
 {
-    // id no te lo modifica porque no está contemplado en el esquema que hemos creado (movieSchema)
-    "id": "abcdefs",
     // Estas sí las modificará
     "title":"Hola mundo",
     "year":1996
 }
 
 ### Eliminar una película de la lista
-DELETE http://localhost:1234/movies/6a360a18-c645-4b47-9a7b-2a71babbf3e0
+DELETE http://localhost:1234/movies/05d6d238-49c4-4a2c-8f69-d8c5507dd50c
