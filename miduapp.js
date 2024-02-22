@@ -1,29 +1,10 @@
 import express, { json } from 'express' // require -> commonJS
-import cors from 'cors'
 import { moviesRouter } from './router/movies.js'
+import { corsMiddleware } from './middlewares/cors.js'
 
 const app = express()
 app.use(json())
-app.use(cors({
-  origin: (origin, callback) => {
-    const ACCEPTED_ORIGINS = [
-      'http://localhost:8080',
-      'http://localhost:1234',
-      'https://movies.com',
-      'https://midu.dev'
-    ]
-
-    if (ACCEPTED_ORIGINS.includes(origin)) {
-      return callback(null, true)
-    }
-
-    if (!origin) {
-      return callback(null, true)
-    }
-
-    return callback(new Error('Not allowed by CORS'))
-  }
-}))
+app.use(corsMiddleware())
 app.disable('x-powered-by') // deshabilitar el header X-Powered-By: Express
 
 // métodos normales: GET/HEAD/POST

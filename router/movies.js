@@ -1,10 +1,10 @@
 import { Router } from 'express'
 // import movies from './movies.json' // Esto no funciona en ESModules
-import { readJSON } from './utils.js'
+import { readJSON } from '../utils.js'
 import { validateMovie, validatePartialMovie } from '../movies.js'
 import { randomUUID } from 'node:crypto'
 
-const router = Router()
+export const moviesRouter = Router()
 
 // Cómo leer JSON en ESModules
 // 1) Usando FS
@@ -15,7 +15,7 @@ const movies = readJSON('./movies.json')
 
 // En este caso se toma como referencia el puerto + /movies (esta lógica la metemos en el miduapp.js), por lo que solo pondremos
 // lo que iría tras el /movies en las URLs de las llamadas que pongamos aquí
-router.get('/', (req, res) => {
+moviesRouter.get('/', (req, res) => {
   const { genre } = req.query
   if (genre) {
     const filteredMovies = movies.filter(
@@ -26,14 +26,14 @@ router.get('/', (req, res) => {
   res.json(movies)
 })
 
-router.get('/:id', (req, res) => {
+moviesRouter.get('/:id', (req, res) => {
   const { id } = req.params
   const movie = movies.find(movie => movie.id === id)
   if (movie) return res.json(movie)
   res.status(404).json({ message: 'Movie not found' })
 })
 
-router.post('/', (req, res) => {
+moviesRouter.post('/', (req, res) => {
   const result = validateMovie(req.body)
 
   if (!result.success) {
@@ -54,7 +54,7 @@ router.post('/', (req, res) => {
   res.status(201).json(newMovie)
 })
 
-router.delete('/:id', (req, res) => {
+moviesRouter.delete('/:id', (req, res) => {
   const { id } = req.params
   const movieIndex = movies.findIndex(movie => movie.id === id)
 
@@ -67,7 +67,7 @@ router.delete('/:id', (req, res) => {
   return res.json({ message: 'Movie deleted' })
 })
 
-router.patch('/:id', (req, res) => {
+moviesRouter.patch('/:id', (req, res) => {
   const result = validatePartialMovie(req.body)
 
   if (!result.success) {
